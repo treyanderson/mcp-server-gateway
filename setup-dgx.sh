@@ -74,19 +74,26 @@ fi
 info "Installing PM2..."
 npm install -g pm2
 
-# 6. Install cloudflared
+# 6. Install cloudflared (detect architecture)
 info "Installing cloudflared..."
-if ! command -v cloudflared &> /dev/null; then
-    sudo curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o /usr/local/bin/cloudflared
+if ! command -v cloudflared &> /dev/null || ! cloudflared --version &> /dev/null; then
+    ARCH=$(uname -m)
+    if [[ "$ARCH" == "aarch64" || "$ARCH" == "arm64" ]]; then
+        CLOUDFLARED_URL="https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64"
+    else
+        CLOUDFLARED_URL="https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64"
+    fi
+    info "Downloading cloudflared for ${ARCH}..."
+    sudo curl -L "$CLOUDFLARED_URL" -o /usr/local/bin/cloudflared
     sudo chmod +x /usr/local/bin/cloudflared
     info "cloudflared installed successfully"
 else
     info "cloudflared already installed: $(cloudflared --version)"
 fi
 
-# 7. Create PM2 ecosystem file
+# 7. Create PM2 ecosystem file (.cjs for ES module compatibility)
 info "Creating PM2 ecosystem file..."
-cat > ecosystem.config.js << 'EOFPM2'
+cat > ecosystem.config.cjs << 'EOFPM2'
 module.exports = {
   apps: [{
     name: 'mcp-gateway',
@@ -139,7 +146,7 @@ echo ""
 echo "2. Start the gateway (choose one):"
 echo "   Option A - PM2 (recommended):"
 echo "     cd ${INSTALL_DIR}"
-echo "     pm2 start ecosystem.config.js"
+echo "     pm2 start ecosystem.config.cjs"
 echo "     pm2 save"
 echo "     pm2 startup  # Follow instructions"
 echo ""
