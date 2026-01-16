@@ -1,0 +1,27 @@
+services:
+  mcp-gateway:
+    build: .
+    image: mcp-gateway:latest
+    container_name: mcp-gateway
+    stdin_open: true
+    tty: true
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+      - HOME=/root
+    volumes:
+      # Mount custom config if needed
+      - ./config.json:/app/config.json:ro
+      # Persistent data directory
+      - gateway-data:/data
+      # Docker socket for Docker-in-Docker (needed for GitHub MCP and other Docker-based servers)
+      - /var/run/docker.sock:/var/run/docker.sock
+      # Optional: Mount host filesystem for filesystem server
+      # - /Users/yourusername:/host:ro
+    restart: unless-stopped
+    # No ports exposed - gateway uses stdio
+
+volumes:
+  gateway-data:
+    driver: local

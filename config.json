@@ -1,0 +1,179 @@
+{
+  "gateway": {
+    "name": "mcp-gateway",
+    "version": "1.0.0",
+    "toolSearch": {
+      "enabled": true,
+      "maxResults": 5,
+      "minScore": 0.1
+    },
+    "http": {
+      "enabled": true,
+      "port": 3100,
+      "host": "127.0.0.1",
+      "corsOrigins": ["*"]
+    }
+  },
+  "servers": {
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["-y", "chrome-devtools-mcp@latest"]
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"],
+      "env": {
+        "CONTEXT7_API_KEY": "${CONTEXT7_API_KEY}"
+      }
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "${HOME}"]
+    },
+    "brave-search": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-brave-search"],
+      "env": {
+        "BRAVE_API_KEY": "${BRAVE_API_KEY}"
+      }
+    },
+    "memory": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-memory"]
+    },
+    "sequential-thinking": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
+    },
+    "firecrawl": {
+      "command": "npx",
+      "args": ["-y", "firecrawl-mcp"],
+      "env": {
+        "FIRECRAWL_API_KEY": "${FIRECRAWL_API_KEY}"
+      }
+    },
+    "cloudflare": {
+      "command": "mcp-server-cloudflare",
+      "args": ["run", "${CLOUDFLARE_ACCOUNT_ID}"],
+      "env": {
+        "CLOUDFLARE_API_TOKEN": "${CLOUDFLARE_API_TOKEN}"
+      }
+    },
+    "elevenlabs": {
+      "command": "npx",
+      "args": ["-y", "@anthropics/mcp-server-elevenlabs"],
+      "env": {
+        "ELEVENLABS_API_KEY": "${ELEVENLABS_API_KEY}"
+      },
+      "disabled": true
+    },
+    "puppeteer": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-puppeteer"]
+    },
+    "docker": {
+      "command": "npx",
+      "args": ["-y", "mcp-server-docker"]
+    },
+    "desktop-commander": {
+      "command": "npx",
+      "args": ["-y", "@wonderwhy-er/desktop-commander"]
+    },
+    "twilio": {
+      "command": "npx",
+      "args": ["-y", "@twilio-alpha/mcp"],
+      "env": {
+        "TWILIO_ACCOUNT_SID": "${TWILIO_ACCOUNT_SID}",
+        "TWILIO_AUTH_TOKEN": "${TWILIO_AUTH_TOKEN}"
+      },
+      "disabled": true
+    },
+    "stripe": {
+      "command": "npx",
+      "args": ["-y", "@stripe/mcp", "--tools=all"],
+      "env": {
+        "STRIPE_SECRET_KEY": "${STRIPE_API_KEY}"
+      },
+      "disabled": true
+    },
+    "neon": {
+      "command": "npx",
+      "args": ["-y", "@neondatabase/mcp-server-neon"],
+      "env": {
+        "NEON_API_KEY": "${NEON_API_KEY}"
+      },
+      "disabled": true
+    },
+    "azure": {
+      "command": "npx",
+      "args": ["-y", "@azure/mcp-server"],
+      "env": {
+        "AZURE_SUBSCRIPTION_ID": "${AZURE_SUBSCRIPTION_ID}",
+        "AZURE_TENANT_ID": "${AZURE_TENANT_ID}",
+        "AZURE_CLIENT_ID": "${AZURE_CLIENT_ID}",
+        "AZURE_CLIENT_SECRET": "${AZURE_CLIENT_SECRET}"
+      },
+      "disabled": true
+    },
+    "slack": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-slack"],
+      "env": {
+        "SLACK_BOT_TOKEN": "${SLACK_BOT_TOKEN}",
+        "SLACK_TEAM_ID": "${SLACK_TEAM_ID}"
+      },
+      "disabled": true
+    },
+    "postgres": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres", "${POSTGRES_CONNECTION_STRING}"],
+      "env": {
+        "POSTGRES_CONNECTION_STRING": "${POSTGRES_CONNECTION_STRING}"
+      },
+      "disabled": true
+    },
+    "sqlite": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sqlite", "${SQLITE_DB_PATH}"],
+      "disabled": true
+    },
+    "time": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-time"],
+      "disabled": true
+    },
+    "fetch": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-fetch"],
+      "disabled": true
+    },
+    "google-drive": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-gdrive"],
+      "env": {
+        "GOOGLE_CLIENT_ID": "${GOOGLE_CLIENT_ID}",
+        "GOOGLE_CLIENT_SECRET": "${GOOGLE_CLIENT_SECRET}",
+        "GOOGLE_REDIRECT_URI": "${GOOGLE_REDIRECT_URI}"
+      },
+      "disabled": true
+    },
+    "sentry": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sentry"],
+      "env": {
+        "SENTRY_AUTH_TOKEN": "${SENTRY_AUTH_TOKEN}",
+        "SENTRY_ORG": "${SENTRY_ORG}"
+      },
+      "disabled": true
+    },
+    "clerk": {
+      "command": "npx",
+      "args": ["-y", "@clerk/clerk-mcp@latest"],
+      "env": {
+        "CLERK_API_KEY": "${CLERK_API_KEY}",
+        "ALL_TOOLS": "${CLERK_ALL_TOOLS:-true}",
+        "PROMPTS_DISABLED": "${CLERK_PROMPTS_DISABLED:-false}"
+      }
+    }
+  }
+}

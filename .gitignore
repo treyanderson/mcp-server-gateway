@@ -1,0 +1,14 @@
+node_modules/
+dist/
+*.log
+.env
+.DS_Store
+config.local.json
+
+# Certificates and keys
+certs/
+*.pem
+*.key
+*.pub
+oracle-mcp-gateway.*
+logs/
